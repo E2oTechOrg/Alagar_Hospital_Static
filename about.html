@@ -13,17 +13,15 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
+<body class="inner-page">
     <div id="header-container"></div>
 
     <main>
-        <section class="page-banner">
-            <span class="blob b1"></span><span class="blob b2"></span>
+        <section class="hero-banner" style="--banner-img: url('../assets/images/ban2.webp');">
             <div class="container">
-                <span class="section-subtitle reveal">ABOUT US</span>
+                <div class="hb-crumb reveal"><a href="index.html">Home</a><i class="fa-solid fa-chevron-right"></i><span>About Us</span></div>
                 <h1 class="reveal" style="--d:.1s">About Alagar Hospital</h1>
                 <p class="reveal" style="--d:.2s">Excellence care, enhancing life</p>
-                <div class="breadcrumb reveal" style="--d:.3s"><a href="index.html">Home</a><i class="fa-solid fa-chevron-right"></i><span>About Us</span></div>
             </div>
         </section>
 
@@ -37,10 +35,16 @@
                         <p>Every patient deserves attentive, expert care. We listen to your concerns, provide thorough evaluations and work with you to build treatment plans that improve your quality of life.</p>
                         <a href="contact.html" class="btn btn-primary" style="margin-top:.6rem">Schedule an Appointment</a>
                     </div>
-                    <div class="tagline-card reveal right">
-                        <h3>Excellence Care, Enhancing Life</h3>
-                        <p><strong>Our Commitment to You</strong><br>
-                            Every patient deserves attentive, expert care. We listen to your concerns and work with you to improve your quality of life.</p>
+
+                    <div class="carousel reveal right" id="aboutCarousel">
+                        <div class="carousel-track">
+                            <figure class="slide active"><img src="assets/images/hospital-building.jpg" alt="Alagar Hospital building"></figure>
+                            <figure class="slide"><img src="assets/images/reception.jpg" alt="Alagar Hospital reception"></figure>
+                            <figure class="slide"><img src="assets/images/laboratory.jpg" alt="Alagar Hospital facilities"></figure>
+                        </div>
+                        <button class="carousel-btn prev" aria-label="Previous slide"><i class="fa-solid fa-chevron-left"></i></button>
+                        <button class="carousel-btn next" aria-label="Next slide"><i class="fa-solid fa-chevron-right"></i></button>
+                        <div class="carousel-dots"></div>
                     </div>
                 </div>
 
@@ -71,6 +75,39 @@
     <div id="footer-container"></div>
 
     <script src="js/script.js"></script>
+    <script>
+    (function () {
+        const root = document.getElementById('aboutCarousel');
+        if (!root) return;
+        const slides = root.querySelectorAll('.slide');
+        const dotsBox = root.querySelector('.carousel-dots');
+        let index = 0, timer;
+
+        slides.forEach((_, i) => {
+            const dot = document.createElement('button');
+            dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+            dot.addEventListener('click', () => { show(i); restart(); });
+            dotsBox.appendChild(dot);
+        });
+        const dots = dotsBox.querySelectorAll('button');
+
+        function show(i) {
+            index = (i + slides.length) % slides.length;
+            slides.forEach((s, n) => s.classList.toggle('active', n === index));
+            dots.forEach((d, n) => d.classList.toggle('active', n === index));
+        }
+        function start() { timer = setInterval(() => show(index + 1), 4000); }
+        function restart() { clearInterval(timer); start(); }
+
+        root.querySelector('.prev').addEventListener('click', () => { show(index - 1); restart(); });
+        root.querySelector('.next').addEventListener('click', () => { show(index + 1); restart(); });
+        root.addEventListener('mouseenter', () => clearInterval(timer));
+        root.addEventListener('mouseleave', start);
+
+        show(0);
+        start();
+    })();
+    </script>
 </body>
 
 </html>
