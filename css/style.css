@@ -19,6 +19,32 @@ section { padding: 96px 0; position: relative; }
 .text-center { text-align: center; }
 .w-100 { width: 100%; }
 
+/* NABH */
+.nabh { padding: 2rem 0 0; }
+.nabh + .about { padding-top: 56px; }   /* overrides the big navbar offset on the home page */
+.nabh-box {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.2rem 2rem;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #e8f5ec, #ffffff);
+    border: 2px solid #1e7a3c;
+    box-shadow: 0 10px 30px rgba(30, 122, 60, .15);
+}
+.nabh-box img { width: 150px; height: auto; flex-shrink: 0; border-radius: 12px; }
+.nabh-text h2 { margin: .3rem 0 .5rem; }
+.nabh-text p { margin: 0; }
+
+/* About page: tighter gap under banner, NABH spacing */
+.inner-page .about { padding-top: 56px; }
+.inner-page .nabh { padding: 0 0 3rem; }
+
+/* Services page: insurance spacing */
+.inner-page .services { padding-bottom: 40px; }
+.inner-page .insurance { background: var(--soft); padding: 70px 0; }
+.inner-page .cta-band { padding-top: 70px; }
+
 /* Buttons */
 .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .85rem 1.7rem; border-radius: 50px; font-weight: 600; font-size: .95rem;
     border: 2px solid transparent; cursor: pointer; transition: transform .3s, box-shadow .3s, background .3s, color .3s; font-family: inherit; position: relative; overflow: hidden; }
@@ -579,3 +605,92 @@ section { padding: 96px 0; position: relative; }
 }
 
 .touch-item a { overflow-wrap: anywhere; font-size: .88rem; }
+
+/* NABH */
+.nabh { padding: 3rem 0; }
+.nabh-box {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem 2rem;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #e8f5ec, #ffffff);
+    border: 2px solid #1e7a3c;
+    box-shadow: 0 10px 30px rgba(30, 122, 60, .15);
+}
+.nabh-box img { width: 170px; height: auto; flex-shrink: 0; }
+.nabh-text h2 { margin: .3rem 0 .6rem; }
+.nabh-text p { margin: 0; }
+
+.fb3 { bottom: 38%; left: -4%; background: #1e7a3c; color: #fff; }
+
+/* Insurance */
+.insurance { padding: 4rem 0; }
+.insurance-card {
+    max-width: 760px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, .15);
+}
+.insurance-card img { display: block; width: 100%; height: auto; }
+
+@media (max-width: 640px) {
+    .nabh-box { flex-direction: column; text-align: center; padding: 1.5rem 1rem; }
+    .nabh-box img { width: 140px; }
+    .fb3 { left: 2%; }
+}
+
+/* ===== Gallery lightbox ===== */
+.photo { cursor: zoom-in; }
+
+.lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 3000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(8, 20, 26, .92);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s, visibility .3s;
+}
+.lightbox.open { opacity: 1; visibility: visible; }
+.lightbox-figure { margin: 0; max-width: 90vw; text-align: center; }
+.lightbox-img {
+    max-width: 90vw;
+    max-height: 78vh;
+    border-radius: 14px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+    animation: lbIn .35s ease;
+}
+.lightbox-caption { margin-top: 1rem; color: #fff; font-weight: 600; font-size: 1.05rem; }
+.lightbox-count { display: block; margin-top: .2rem; color: rgba(255, 255, 255, .65); font-size: .85rem; font-weight: 500; }
+.lb-btn {
+    position: absolute;
+    border: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .15);
+    color: #fff;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: background .3s, transform .3s;
+}
+.lb-btn:hover { background: var(--accent); transform: scale(1.1); }
+.lb-close { top: 20px; right: 20px; width: 46px; height: 46px; font-size: 1.1rem; }
+.lb-prev, .lb-next { top: 50%; width: 50px; height: 50px; margin-top: -25px; font-size: 1.1rem; }
+.lb-prev { left: 20px; }
+.lb-next { right: 20px; }
+.lb-prev:hover, .lb-next:hover { transform: scale(1.1); }
+body.lb-lock { overflow: hidden; }
+
+@keyframes lbIn { from { opacity: 0; transform: scale(.94); } to { opacity: 1; transform: none; } }
+
+@media (max-width: 640px) {
+    .lb-prev, .lb-next { top: auto; bottom: 24px; margin-top: 0; width: 46px; height: 46px; }
+    .lb-prev { left: calc(50% - 60px); }
+    .lb-next { right: calc(50% - 60px); }
+    .lightbox-img { max-height: 70vh; }
+}
