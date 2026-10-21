@@ -143,3 +143,67 @@ initReveal();
 initContactForm();
 loadComponent("header-container", "header.html");
 loadComponent("footer-container", "footer.html");
+
+/* ===== Gallery lightbox ===== */
+(function () {
+    const photos = Array.from(document.querySelectorAll('.photo-gallery .photo'));
+    if (!photos.length) return;
+
+    const box = document.createElement('div');
+    box.className = 'lightbox';
+    box.setAttribute('role', 'dialog');
+    box.setAttribute('aria-modal', 'true');
+    box.innerHTML = `
+        <button class="lb-btn lb-close" aria-label="Close"><i class="fa-solid fa-xmark"></i></button>
+        <button class="lb-btn lb-prev" aria-label="Previous image"><i class="fa-solid fa-chevron-left"></i></button>
+        <figure class="lightbox-figure">
+            <img class="lightbox-img" src="" alt="">
+            <figcaption class="lightbox-caption"></figcaption>
+        </figure>
+        <button class="lb-btn lb-next" aria-label="Next image"><i class="fa-solid fa-chevron-right"></i></button>`;
+    document.body.appendChild(box);
+
+    const img = box.querySelector('.lightbox-img');
+    const caption = box.querySelector('.lightbox-caption');
+    let current = 0;
+
+    function show(i) {
+        current = (i + photos.length) % photos.length;
+        const src = photos[current].querySelector('img');
+        const title = photos[current].querySelector('figcaption');
+        img.src = src.currentSrc || src.src;
+        img.alt = src.alt;
+        caption.innerHTML = (title ? title.textContent : '') +
+            '<span class="lightbox-count">' + (current + 1) + ' / ' + photos.length + '</span>';
+    }
+    function open(i) {
+        show(i);
+        box.classList.add('open');
+        document.body.classList.add('lb-lock');
+    }
+    function close() {
+        box.classList.remove('open');
+        document.body.classList.remove('lb-lock');
+    }
+
+    photos.forEach((p, i) => p.addEventListener('click', () => open(i)));
+    box.querySelector('.lb-close').addEventListener('click', close);
+    box.querySelector('.lb-prev').addEventListener('click', () => show(current - 1));
+    box.querySelector('.lb-next').addEventListener('click', () => show(current + 1));
+    box.addEventListener('click', e => { if (e.target === box) close(); });
+
+    document.addEventListener('keydown', e => {
+        if (!box.classList.contains('open')) return;
+        if (e.key === 'Escape') close();
+        if (e.key === 'ArrowLeft') show(current - 1);
+        if (e.key === 'ArrowRight') show(current + 1);
+    });
+
+    // swipe on touch devices
+    let startX = 0;
+    box.addEventListener('touchstart', e => { startX = e.changedTouches[0].clientX; }, { passive: true });
+    box.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 50) show(dx < 0 ? current + 1 : current - 1);
+    });
+})();
