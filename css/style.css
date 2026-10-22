@@ -694,3 +694,25 @@ body.lb-lock { overflow: hidden; }
     .lb-next { right: calc(50% - 60px); }
     .lightbox-img { max-height: 70vh; }
 }
+.doctor-photo {
+    position: relative;      /* needed so z-index works */
+    z-index: 1;              /* sits above the teal banner */
+    width: 180px;
+    height: 180px;
+    margin: -10px auto 1.2rem; /* pulls the photo up so it straddles the banner edge */
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid #fff;
+    background: #fff;
+    box-shadow: var(--shadow);
+}
+.doctor-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 15%; /* keeps the face centered in the circle */
+    display: block;
+}
+@media (max-width: 600px) {
+    .doctor-photo { width: 150px; height: 150px; }
+}
