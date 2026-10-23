@@ -75,7 +75,7 @@ section { padding: 96px 0; position: relative; }
 .navbar.scrolled { box-shadow: 0 4px 25px rgba(11, 86, 107, .12); height: 68px; }
 .navbar.scrolled::before { opacity: 1; }
 .nav-container { height: 100%; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
-.logo-img { height: 48px; width: auto; border-radius: 8px; transition: transform .3s; }
+.logo-img { height: 70px; width: auto; border-radius: 8px; transition: transform .3s; }
 .logo:hover .logo-img { transform: scale(1.06); }
 .nav-menu { display: flex; align-items: center; gap: 2rem; }
 .nav-links { display: flex; gap: .4rem; }
